@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/core";
 import React from "react";
 import { FlatList, Text, Image, TouchableOpacity, View } from "react-native";
 import { Icon } from "react-native-elements/dist/icons/Icon";
@@ -18,13 +19,18 @@ const data = [
 ];
 
 const NavOptions = () => {
+  const navigation = useNavigation();
+
   return (
     <FlatList
       data={data}
       keyExtractor={(item) => item.id}
       horizontal
       renderItem={({ item }) => (
-        <TouchableOpacity style={tw`p-2 pl-4 pb-8 pt-4 bg-gray-200 m-2`}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate(item.screen)}
+          style={tw`p-2 pl-4 pb-8 pt-4 bg-gray-200 m-2`}
+        >
           <View>
             <Image
               style={{ width: 120, height: 120, resizeMode: "contain" }}
