@@ -12,6 +12,8 @@ import {
 import { Icon } from "react-native-elements";
 import tw from "tailwind-react-native-classnames";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
+import { selectTravelTimeInformation } from "../slices/navSlice";
 
 const data = [
   {
@@ -22,13 +24,13 @@ const data = [
   },
   {
     id: "Uber-XL-456",
-    title: "uber XL",
+    title: "Uber XL",
     multiplier: 1.2,
     image: "https://links.papareact.com/5w8",
   },
   {
     id: "Uber-LUX-789",
-    title: "uber LUX",
+    title: "Uber LUX",
     multiplier: 1.75,
     image: "https://links.papareact.com/7pf",
   },
@@ -37,6 +39,7 @@ const data = [
 const RideOptionsCard = () => {
   const navigation = useNavigation();
   const [selected, setSelected] = useState(null);
+  const travelTimeInfo = useSelector(selectTravelTimeInformation);
 
   return (
     <SafeAreaView style={tw`bg-white flex-grow`}>
@@ -47,7 +50,9 @@ const RideOptionsCard = () => {
         >
           <Icon name="chevron-left" type="fontawesome" />
         </TouchableOpacity>
-        <Text style={tw`text-center py-1 text-xl`}>Select a Ride</Text>
+        <Text style={tw`text-center py-1 text-xl`}>
+          Select a Ride - {travelTimeInfo?.distance.text}
+        </Text>
       </View>
       <FlatList
         data={data}
@@ -65,7 +70,7 @@ const RideOptionsCard = () => {
             />
             <View style={tw`-ml-6`}>
               <Text style={tw`text-xl font-semibold`}>{item.title}</Text>
-              <Text>Travel Time...</Text>
+              <Text>{travelTimeInfo?.duration.text} Travel Time</Text>
             </View>
             <Text style={tw`text-xl`}>$50</Text>
           </TouchableOpacity>
