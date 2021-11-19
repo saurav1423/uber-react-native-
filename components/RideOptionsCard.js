@@ -9,6 +9,8 @@ import {
   Image,
   TouchableOpacityBase,
 } from "react-native";
+import "intl";
+import "intl/locale-data/jsonp/en";
 import { Icon } from "react-native-elements";
 import tw from "tailwind-react-native-classnames";
 import { useNavigation } from "@react-navigation/native";
@@ -35,6 +37,8 @@ const data = [
     image: "https://links.papareact.com/7pf",
   },
 ];
+
+const SURGE_CHARGE_RATE = 1.5;
 
 const RideOptionsCard = () => {
   const navigation = useNavigation();
@@ -70,13 +74,23 @@ const RideOptionsCard = () => {
             />
             <View style={tw`-ml-6`}>
               <Text style={tw`text-xl font-semibold`}>{item.title}</Text>
-              <Text>{travelTimeInfo?.duration.text} Travel Time</Text>
+              <Text>{travelTimeInfo?.duration.text}</Text>
             </View>
-            <Text style={tw`text-xl`}>$50</Text>
+            <Text style={tw`text-xl`}>
+              {new Intl.NumberFormat("en-IN", {
+                style: "currency",
+                currency: "USD",
+              }).format(
+                (travelTimeInfo?.duration.value *
+                  SURGE_CHARGE_RATE *
+                  item.multiplier) /
+                  100
+              )}
+            </Text>
           </TouchableOpacity>
         )}
       />
-      <View>
+      <View style={tw`mt-auto border-t border-gray-200`}>
         <TouchableOpacity
           disabled={!selected}
           style={tw`bg-black py-3 ml-3 mr-3 ${!selected && "bg-gray-300"}`}
