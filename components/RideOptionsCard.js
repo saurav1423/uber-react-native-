@@ -55,7 +55,7 @@ const RideOptionsCard = () => {
           <Icon name="chevron-left" type="fontawesome" />
         </TouchableOpacity>
         <Text style={tw`text-center py-1 text-xl`}>
-          Select a Ride - {travelTimeInfo?.distance.text}
+          Select a Ride - {travelTimeInfo?.distance?.text}
         </Text>
       </View>
       <FlatList
